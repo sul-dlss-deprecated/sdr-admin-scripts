@@ -25,9 +25,9 @@ Ruby scripts to perform common one-off administrative tasks in the SDR.
 ## Quick start
 
 ```ruby
-updater = WorkflowStatusUpdater.update(druid: 'bm459md8742',
-                                       workflow: 'accessionWF',
-                                       step: 'descriptive-metadata',
-                                       status: 'waiting')
+updater = WorkflowStatusUpdater.new(druid: 'bm459md8742',
+                                    workflow: 'accessionWF',
+                                    step: 'descriptive-metadata',
+                                    status: 'waiting')
 updater.update
 ```
