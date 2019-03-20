@@ -36,7 +36,7 @@ describe 'WorkflowStatusUpdater' do
 
   describe '.update' do
     it 'returns a 204 on a successful update' do
-      url = "#{@workflow_status_updater.config['host']}/workflow/dor/objects/druid:#{@workflow_status_updater.druid}/workflows/#{workflow_status_updater.workflow}/#{}"
+      url = "#{@workflow_status_updater.config['host']}/workflow/dor/objects/druid:#{@workflow_status_updater.druid}/workflows/#{@workflow_status_updater.workflow}/#{}"
       stub_request(:put, "https://lyberservices-test.stanford.edu/workflow/dor/objects/druid:bm459md8742/workflows/accessionWF/descriptive-metadata")
         .with(
           body: @workflow_status_updater.payload,
