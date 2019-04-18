@@ -5,9 +5,9 @@ require './lib/workflow_status_updater.rb'
 #
 # druids.each do |druid|
 #  updater = WorkflowStatusUpdater.new(druid: druid,
+#                                      repo: 'dor',
 #                                      workflow: 'accessionWF',
 #                                      step: 'descriptive-metadata',
 #                                      status: 'waiting')
 #  puts updater.inspect
 # end
-
