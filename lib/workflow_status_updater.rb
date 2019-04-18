@@ -7,6 +7,7 @@ class WorkflowStatusUpdater
   attr_reader :workflow
   attr_reader :step
   attr_reader :status
+  attr_reader :repo
   attr_reader :payload
 
   def initialize(args)
@@ -14,6 +15,7 @@ class WorkflowStatusUpdater
     @workflow = args[:workflow]
     @step = args[:step]
     @status = args[:status]
+    @repo = args[:repo]
     @payload = "<process name='#{@step}' status='#{@status}'/>"
   end
 
@@ -25,7 +27,7 @@ class WorkflowStatusUpdater
   # updater.update
 
   def update
-    path = "/workflow/dor/objects/druid:#{druid}/workflows/#{workflow}/#{step}"
+    path = "/workflow/#{repo}/objects/druid:#{druid}/workflows/#{workflow}/#{step}"
     conn = Faraday.new(url: config['host'])
     conn.basic_auth(config['user'], config['password'])
     conn.headers['content-type'] = 'application/xml'

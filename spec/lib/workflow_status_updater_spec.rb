@@ -7,7 +7,8 @@ describe 'WorkflowStatusUpdater' do
     @workflow_status_updater = WorkflowStatusUpdater.new(druid: 'bm459md8742',
                                                          workflow: 'accessionWF',
                                                          step: 'descriptive-metadata',
-                                                         status: 'waiting')
+                                                         status: 'waiting',
+                                                         repo: 'dor')
   end
 
   it 'can instantiate with appropriate arguments' do
@@ -30,13 +31,17 @@ describe 'WorkflowStatusUpdater' do
     expect(@workflow_status_updater.status).to eql('waiting')
   end
 
+  it 'can return its repository' do
+    expect(@workflow_status_updater.repo).to eql('dor')
+  end
+
   it 'can return its XML payload' do
     expect(@workflow_status_updater.payload).to eql("<process name='descriptive-metadata' status='waiting'/>")
   end
 
   describe '.update' do
-    it 'returns a 204 on a successful update' do
-      url = "#{@workflow_status_updater.config['host']}/workflow/dor/objects/druid:#{@workflow_status_updater.druid}/workflows/#{@workflow_status_updater.workflow}/#{}"
+    it 'returns a 200 on a successful update' do
+      url = "#{@workflow_status_updater.config['host']}/workflow/#{@workflow_status_updater.repo}/objects/druid:#{@workflow_status_updater.druid}/workflows/#{@workflow_status_updater.workflow}/"
       stub_request(:put, "https://lyberservices-test.stanford.edu/workflow/dor/objects/druid:bm459md8742/workflows/accessionWF/descriptive-metadata")
         .with(
           body: @workflow_status_updater.payload,
@@ -44,10 +49,10 @@ describe 'WorkflowStatusUpdater' do
             'Authorization'=>'Basic ZG9yX3NlcnZpY2VfdHN0OnB3NG1lbmU=',
             'Content-Type'=>'application/xml'
           }
-      ).to_return(status: 204, body: "", headers: {})
+      ).to_return(status: 200, body: "", headers: {})
       response = @workflow_status_updater.update
 
-      expect(response.status).to eql(204)
+      expect(response.status).to eql(200)
     end
   end
 
